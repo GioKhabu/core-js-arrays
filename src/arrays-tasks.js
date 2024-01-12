@@ -497,8 +497,21 @@ function getIndicesOfOddNumbers(numbers) {
  *    getHexRGBValues([ 0, 255, 16777215]) => [ '#000000', '#0000FF', '#FFFFFF' ]
  *    getHexRGBValues([]) => []
  */
-function getHexRGBValues(/* arr */) {
-  throw new Error('Not implemented');
+function getHexRGBValues(arr) {
+  if (!arr || arr.length === 0) {
+    return [];
+  }
+
+  return arr.map((num) => {
+    const clampedNum = Math.min(255, Math.max(0, num));
+
+    const hexValue = clampedNum.toString(16).toUpperCase();
+    if (num <= 255) {
+      return `#${hexValue.padStart(6, '0')}`;
+    }
+
+    return '#FFFFFF';
+  });
 }
 
 /**
