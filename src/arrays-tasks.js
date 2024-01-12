@@ -515,8 +515,12 @@ function getHexRGBValues(/* arr */) {
  *   getMaxItems([ 10, 2, 7, 5, 3, -5 ], 3) => [ 10, 7, 5 ]
  *   getMaxItems([ 10, 10, 10, 10 ], 3) => [ 10, 10, 10 ]
  */
-function getMaxItems(/* arr, n */) {
-  throw new Error('Not implemented');
+function getMaxItems(arr, n) {
+  if (!arr || n <= 0) {
+    return [];
+  }
+
+  return arr.sort((a, b) => b - a).slice(0, n);
 }
 
 /**
@@ -583,8 +587,18 @@ function propagateItemsByPositionIndex(arr) {
  *    shiftArray(['a', 'b', 'c', 'd'], -1) => ['b', 'c', 'd', 'a']
  *    shiftArray([10, 20, 30, 40, 50], -3) => [40, 50, 10, 20, 30]
  */
-function shiftArray(/* arr, n */) {
-  throw new Error('Not implemented');
+function shiftArray(arr, n) {
+  let sum = [];
+  if (n > 0) {
+    const left = arr.slice(n + 1);
+    const right = arr.slice(0, n + 1);
+    sum = [...left, ...right];
+  } else {
+    const left = arr.slice(n * -1);
+    const right = arr.slice(0, n * -1);
+    sum = [...left, ...right];
+  }
+  return sum;
 }
 
 /**
@@ -600,8 +614,23 @@ function shiftArray(/* arr, n */) {
  *   sortDigitNamesByNumericOrder([ 'nine','eight','nine','eight' ]) => [ 'eight','eight','nine','nine']
  *   sortDigitNamesByNumericOrder([ 'one','one','one','zero' ]) => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const digitNamesOrder = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+
+  return arr.sort(
+    (a, b) => digitNamesOrder.indexOf(a) - digitNamesOrder.indexOf(b)
+  );
 }
 
 /**
@@ -623,8 +652,20 @@ function sortDigitNamesByNumericOrder(/* arr */) {
  *   swapHeadAndTail([]) => []
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  const firstHalf = Math.floor(arr.length / 2);
+  const lastHalf = Math.ceil(arr.length / 2);
+
+  const firstPart = arr.slice(0, firstHalf).sort((a, b) => a - b);
+  const lastPart = arr.slice(lastHalf).sort((a, b) => a - b);
+  const middlePart = arr.slice(firstHalf, firstHalf + 1);
+  if (arr.length === 1) {
+    return arr;
+  }
+  if (arr.length % 2 !== 0) {
+    return [...lastPart, ...middlePart, ...firstPart];
+  }
+  return [...lastPart, ...firstPart];
 }
 
 module.exports = {
